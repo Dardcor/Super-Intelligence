@@ -29,6 +29,9 @@ Install-AllTo (Join-Path $HomeDir ".agents\skills")
 Install-AllTo (Join-Path $HomeDir ".claude\skills")
 # OpenCode
 Install-AllTo (Join-Path $HomeDir ".config\opencode\skills")
-# Antigravity (global)
+# Antigravity (global, IDE path)
 Install-AllTo (Join-Path $HomeDir ".gemini\antigravity\skills")
+# Antigravity (global, app path — the IDE path alone is not read
+# by the Antigravity app; see references/compatibility.md)
+Install-AllTo (Join-Path $HomeDir ".gemini\config\skills")
 Write-Host "Done. Start a new session in your agent tool to load the skills."

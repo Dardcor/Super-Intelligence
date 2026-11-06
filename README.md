@@ -122,11 +122,17 @@ agent tool on a real machine is still the next test — see
 ## Install
 
 ```bash
-npx skills add Dardcor/Super-Intelligence
+npx skills add Dardcor/Super-Intelligence --all --copy
 ```
 
 The `skills` CLI detects installed tools and installs to each.
-Or run the script in this repo:
+The flags matter: `-y` is implied by `--all` (the bare command
+asks interactive questions and hangs inside an agent), and
+`--copy` avoids symlinks, which fail on Windows without
+Developer Mode. The CLI needs **Git** installed — without it
+the download fails. No Git? Download `Source code (zip)` from
+the [v0.1.0 release](https://github.com/Dardcor/Super-Intelligence/releases/tag/v0.1.0),
+extract it, and run the script in this repo:
 
 ```bash
 sh scripts/install.sh        # macOS / Linux
@@ -142,6 +148,12 @@ Requirements: `sh` + standard Unix tools (macOS/Linux), or
 PowerShell 5.1+ / PowerShell 7 (Windows; also works on macOS/Linux).
 Validating the repo needs Python 3 (`python3 scripts/check-skill.py`,
 or `python` on Windows).
+
+> **Antigravity:** `npx skills add -a antigravity` installs to
+> `~/.agents/skills/`, which Antigravity does **not** read
+> globally. Use the install script above (it also covers
+> `~/.gemini/antigravity/skills/` and `~/.gemini/config/skills/`)
+> or copy the skills into your workspace `.agents/skills/`.
 
 Per-tool commands (Claude Code, Codex, OpenCode, Antigravity)
 are in [`skills/super-intelligence/references/install.md`](skills/super-intelligence/references/install.md).

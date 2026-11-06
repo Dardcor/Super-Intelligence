@@ -9,7 +9,7 @@ set -eu
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 INSTALLER="$REPO_DIR/scripts/install.sh"
-TARGETS=".agents/skills .claude/skills .config/opencode/skills .gemini/antigravity/skills"
+TARGETS=".agents/skills .claude/skills .config/opencode/skills .gemini/antigravity/skills .gemini/config/skills"
 
 fail() {
   echo "FAIL: $1" >&2
@@ -29,9 +29,9 @@ done
 [ -n "$SKILLS" ] || fail "no skills found under $REPO_DIR/skills"
 echo "skills under test:$SKILLS"
 
-# Expected file count: every source file installed to each of the 4 targets.
+# Expected file count: every source file installed to each of the 5 targets.
 SRC_FILES="$(find "$REPO_DIR/skills" -type f | wc -l | tr -d ' ')"
-EXPECTED=$((SRC_FILES * 4))
+EXPECTED=$((SRC_FILES * 5))
 echo "expected files after install: $EXPECTED ($SRC_FILES source files x 4 targets)"
 
 FAKE_HOME="$(mktemp -d)"
@@ -73,4 +73,4 @@ for target in $TARGETS; do
   echo "OK $target (all skills present, no nested copies)"
 done
 
-echo "PASS: install is idempotent ($COUNT2 files, 4 targets, no nested copies)"
+echo "PASS: install is idempotent ($COUNT2 files, 5 targets, no nested copies)"

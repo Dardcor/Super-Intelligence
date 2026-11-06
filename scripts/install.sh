@@ -35,5 +35,8 @@ install_all_to "$HOME/.claude/skills"
 install_all_to "$HOME/.config/opencode/skills"
 # Antigravity (global, IDE path)
 install_all_to "$HOME/.gemini/antigravity/skills"
+# Antigravity (global, app path — the IDE path alone is not read
+# by the Antigravity app; see references/compatibility.md)
+install_all_to "$HOME/.gemini/config/skills"
 
 echo "Done. Start a new session in your agent tool to load the skills."

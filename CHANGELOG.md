@@ -8,6 +8,12 @@ First release.
   read natively by Claude Code, Codex, OpenCode, Antigravity,
   Cursor, and Gemini CLI. One format, every tool — only the
   install path differs.
+- Install fix (2026-11-06, same release): `npx skills add`
+  needs `-y --copy -g` (bare command hangs on its interactive
+  prompt; default symlinks fail on Windows; the CLI needs Git
+  installed). Installers now also write to Antigravity's app
+  global path `~/.gemini/config/skills/` — the CLI's
+  `~/.agents/skills/` target is not read by Antigravity.
 - Meta-skill: `super-intelligence` — Clarify → Plan → Do →
   Verify → Humanize → Deliver, with a Delivery Gate.
 - Narrow sub-skills (one job each, the meta-skill delegates to

@@ -28,7 +28,7 @@ different install path, that is an install adapter, not a new skill.
 | Claude Code | `~/.claude/skills/<name>/SKILL.md`, or `.claude/skills/<name>/SKILL.md` in a project | `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` in this repo | `claude plugin marketplace add Dardcor/Super-Intelligence`, then `claude plugin install super-intelligence@super-intelligence` |
 | Codex | `.agents/skills/` in the project (walked to repo root), `~/.agents/skills/`, `/etc/codex/skills` | `.codex-plugin/plugin.json`, marketplace via `.agents/plugins/marketplace.json` | `codex plugin marketplace add Dardcor/Super-Intelligence`, then install the plugin; or copy the skill folder to `~/.agents/skills/` |
 | OpenCode | `.opencode/skills/`, `~/.config/opencode/skills/`, plus `.agents/skills/`, `~/.agents/skills/`, `~/.claude/skills/` | No plugin manifest needed — folder discovery | `npx skills add Dardcor/Super-Intelligence`, or copy to `~/.config/opencode/skills/` |
-| Antigravity | `.agents/skills/<name>/SKILL.md` in the workspace; global `~/.gemini/antigravity/skills/` or `~/.gemini/config/skills/` | No formal plugin manifest — directory auto-discovery; CLI plugin via `agy plugin install <repo>` | `npx skills add Dardcor/Super-Intelligence -a antigravity`, or `agy plugin install https://github.com/Dardcor/Super-Intelligence.git`, or copy to `.agents/skills/` |
+| Antigravity | Workspace `.agents/skills/<name>/SKILL.md` (always read). Global depends on the client: app `~/.gemini/config/skills/`, IDE `~/.gemini/antigravity/skills/`, CLI `~/.gemini/antigravity-cli/skills/`. **Global `~/.agents/skills/` is NOT read by Antigravity** — that is where `npx skills add -a antigravity` installs, so a bare `npx` install looks successful but the skill never loads. | No formal plugin manifest — directory auto-discovery; CLI plugin via `agy plugin install <repo>` | `scripts/install.ps1` / `scripts/install.sh` (covers both global paths), or copy to the workspace `.agents/skills/`, or `agy plugin install https://github.com/Dardcor/Super-Intelligence.git` |
 | Cursor / Gemini CLI / Copilot | `.agents/skills/` (shared hub) | Varies by tool | `npx skills add Dardcor/Super-Intelligence` — the skills CLI detects installed tools and installs to each |
 
 ## Test status — read this before trusting the table
@@ -47,12 +47,29 @@ tools' own docs. What has **actually been tested**:
 ## Universal install (recommended)
 
 ```bash
-npx skills add Dardcor/Super-Intelligence
+npx skills add Dardcor/Super-Intelligence --all --copy
+```
+
+or per tool:
+
+```bash
+npx skills add Dardcor/Super-Intelligence -g -a codex --copy -y
+npx skills add Dardcor/Super-Intelligence -g -a antigravity --copy -y
 ```
 
 The `skills` CLI detects which agent tools are installed and
-copies the skill to each one's skills folder. Restart / start a
-new session after install — skills load at session start.
+copies the skill to each one's skills folder. The flags matter:
+`-y` (the bare command asks interactive questions and hangs
+inside an agent with no terminal), `--copy` (the default
+symlink install fails on Windows without Developer Mode or
+admin rights). The CLI needs **Git** installed — without it,
+it fails with `spawn git ENOENT`. No Git? Download the
+release ZIP and run `scripts/install.ps1` / `scripts/install.sh`
+instead (see `install.md` Option 6).
+
+Restart / start a new session after install — skills load at
+session start. Exception: for Antigravity, prefer the install
+scripts or a workspace install — see the Antigravity row above.
 
 ## What is NOT the framework
 
