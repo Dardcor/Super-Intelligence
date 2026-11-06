@@ -57,13 +57,37 @@ Manual fallback: copy to `.agents/skills/super-intelligence/`
 (global). Antigravity has no plugin manifest — it discovers
 `SKILL.md` folders by directory, so do not look for a manifest file.
 
-## Option 6 — Manual (works everywhere)
+## Option 6 — Install scripts in this repo (all skills, all OS)
+
+```bash
+sh scripts/install.sh        # macOS / Linux (works even if the file lost its executable bit)
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/install.ps1   # Windows
+```
+
+Both scripts copy **every** skill folder under `skills/` to each
+tool's skills folder (`.agents/skills`, `.claude/skills`,
+`.config/opencode/skills`, `.gemini/antigravity/skills`). They
+remove the old copy first, so running them again to update is safe.
+`install.ps1` also runs under PowerShell 7 on macOS/Linux.
+
+## Option 7 — Manual (works everywhere)
 
 1. Clone the repo:
    ```bash
    git clone https://github.com/Dardcor/Super-Intelligence.git
    ```
-2. Copy `skills/super-intelligence/` into your agent's skills folder.
+2. Copy every folder under `skills/` into your agent's skills
+   folder — for example, on macOS/Linux:
+   ```bash
+   cp -R skills/* ~/.agents/skills/
+   ```
+   or on Windows (PowerShell):
+   ```powershell
+   Copy-Item -Recurse skills/* "$env:USERPROFILE\.agents\skills\"
+   ```
 3. Start a new session and ask for something open-ended — the
    agent should load `super-intelligence` when the task fits its
    description.

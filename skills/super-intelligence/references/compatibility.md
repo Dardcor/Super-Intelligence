@@ -31,6 +31,19 @@ different install path, that is an install adapter, not a new skill.
 | Antigravity | `.agents/skills/<name>/SKILL.md` in the workspace; global `~/.gemini/antigravity/skills/` or `~/.gemini/config/skills/` | No formal plugin manifest — directory auto-discovery; CLI plugin via `agy plugin install <repo>` | `npx skills add Dardcor/Super-Intelligence -a antigravity`, or `agy plugin install https://github.com/Dardcor/Super-Intelligence.git`, or copy to `.agents/skills/` |
 | Cursor / Gemini CLI / Copilot | `.agents/skills/` (shared hub) | Varies by tool | `npx skills add Dardcor/Super-Intelligence` — the skills CLI detects installed tools and installs to each |
 
+## Test status — read this before trusting the table
+
+The discovery paths and install commands above come from the
+tools' own docs. What has **actually been tested**:
+
+- Local validator (`python3 scripts/check-skill.py`): passes for
+  all 8 skills and all 5 plugin/marketplace JSON files.
+- Sandbox install test (`sh scripts/test-install.sh`): install
+  twice into a fake HOME, 80 files both runs, no nested copies.
+- Loading in a real agent tool (Claude Code / Codex / OpenCode /
+  Antigravity on a real machine): **not tested yet**. Until that
+  happens, treat every row above as "documented, untested".
+
 ## Universal install (recommended)
 
 ```bash

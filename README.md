@@ -51,16 +51,24 @@ Super-Intelligence/
 ├── README.md
 ├── LICENSE
 ├── CHANGELOG.md
+├── PLAN.md                              # development plan (local)
 ├── skills/                              # <-- canonical source. Never duplicate SKILL.md.
-│   └── super-intelligence/
-│       ├── SKILL.md                     # the skill. Load this.
-│       ├── references/
-│       │   ├── humanize.md              # write like a real person
-│       │   ├── plan-verify.md           # plan + verify checklist
-│       │   ├── install.md               # install per tool
-│       │   └── compatibility.md         # per-tool support table
-│       └── examples/
-│           └── vague-request.md         # one worked example
+│   ├── super-intelligence/              # meta-skill (v0.1.0)
+│   │   ├── SKILL.md                     # the skill. Load this.
+│   │   ├── references/
+│   │   │   ├── humanize.md              # write like a real person
+│   │   │   ├── plan-verify.md           # plan + verify checklist
+│   │   │   ├── install.md               # install per tool
+│   │   │   └── compatibility.md         # per-tool support table
+│   │   └── examples/
+│   │       └── vague-request.md         # one worked example
+│   ├── research/                        # research one topic properly
+│   ├── plan-project/                    # vague idea → concrete plan
+│   ├── code-review/                     # review code changes
+│   ├── understand-code/                 # map a codebase (read-only)
+│   ├── debug/                           # error → cause → minimal fix
+│   ├── build-ui/                        # UI with an anti-slop filter
+│   └── write-human/                     # write like a real human
 ├── .claude-plugin/                      # thin adapter for Claude Code
 │   ├── plugin.json
 │   └── marketplace.json
@@ -70,10 +78,13 @@ Super-Intelligence/
 │   └── marketplace.json                 # Codex marketplace registration
 ├── .cursor-plugin/
 │   └── plugin.json                      # thin adapter for Cursor
+├── .github/workflows/
+│   └── check.yml                        # draft CI: validator + install test
 └── scripts/
-    ├── install.sh                       # copy skill to every tool found (macOS/Linux)
+    ├── install.sh                       # copy all skills to every tool found (macOS/Linux)
     ├── install.ps1                      # same, for Windows
-    └── check-skill.py                   # validate SKILL.md against the spec
+    ├── check-skill.py                   # validate SKILL.md + plugin JSON against the spec
+    └── test-install.sh                  # sandbox test: install twice, no nested copies
 ```
 
 Rules:
@@ -85,6 +96,29 @@ Rules:
 3. Add a new narrow skill as a new folder under `skills/`,
    never by stuffing everything into `super-intelligence`.
 
+## Skills
+
+**Meta-skill (v0.1.0):** `super-intelligence` — the orchestrator.
+Clarify → Plan → Do → Verify → Humanize → Deliver.
+
+**Narrow sub-skills (v0.1.0).**
+Each does one job, and the meta-skill delegates to them:
+
+| Skill | One job |
+|---|---|
+| `research` | Research one topic from verifiable sources → summary + sources + what is still unverified |
+| `plan-project` | Turn a vague idea into a concrete plan: goal, done criteria, 3–7 steps, out-of-scope, risks |
+| `code-review` | Review code changes: numbered findings by priority, fixes suggested only |
+| `understand-code` | Map a codebase a human can read (read-only, never modifies code) |
+| `debug` | From an error or bug report: reproduce, find the cause, propose the minimal fix |
+| `build-ui` | Build a UI with an anti-slop filter: every element must pass a purpose test |
+| `write-human` | Write documents, READMEs, and copy like a real human: specific, honest, no hype |
+
+These skills pass the local validator (`check-skill.py`) and the
+sandbox install test (`test-install.sh`). Loading them in a real
+agent tool on a real machine is still the next test — see
+`compatibility.md` for the honest test status.
+
 ## Install
 
 ```bash
@@ -95,9 +129,19 @@ The `skills` CLI detects installed tools and installs to each.
 Or run the script in this repo:
 
 ```bash
-./scripts/install.sh        # macOS / Linux
+sh scripts/install.sh        # macOS / Linux
+```
+
+```powershell
 powershell -ExecutionPolicy Bypass -File scripts/install.ps1   # Windows
 ```
+
+Both scripts install **all** skills in this repo to every agent
+tool found on the machine, and are safe to run again to update.
+Requirements: `sh` + standard Unix tools (macOS/Linux), or
+PowerShell 5.1+ / PowerShell 7 (Windows; also works on macOS/Linux).
+Validating the repo needs Python 3 (`python3 scripts/check-skill.py`,
+or `python` on Windows).
 
 Per-tool commands (Claude Code, Codex, OpenCode, Antigravity)
 are in [`skills/super-intelligence/references/install.md`](skills/super-intelligence/references/install.md).
@@ -122,14 +166,22 @@ Humanize + Delivery Gate from Super-Intelligence at the end.
 ## Validate
 
 ```bash
-python3 scripts/check-skill.py
+python3 scripts/check-skill.py   # SKILL.md spec + plugin JSON
+sh scripts/test-install.sh       # sandbox: install twice, no nested copies
 ```
 
 ## Status
 
-v0.1.0 — first working version. One meta-skill, four references,
-one example, install scripts for macOS/Linux and Windows, and
-thin plugin adapters for Claude Code, Codex, and Cursor.
+v0.1.0 — first release. One meta-skill (`super-intelligence`)
+plus 7 narrow sub-skills (`research`, `plan-project`,
+`code-review`, `understand-code`, `debug`, `build-ui`,
+`write-human`), a deepened Humanize reference with before/after
+examples, install scripts for macOS/Linux and Windows, a
+validator, a sandbox install test, and a draft CI workflow.
+
+Honest status: everything here passes the local validator and
+the install test. Loading the skills in a real agent tool on a
+real machine is the next test — see `compatibility.md`.
 
 ## License
 
