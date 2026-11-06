@@ -47,6 +47,22 @@ tools' own docs. What has **actually been tested**:
 ## Universal install (recommended)
 
 ```bash
+npx super-intelligence
+```
+
+One command installs all 8 skills into every tool above. The
+skills ship inside the npm package — no Git, no clone, no
+download step, no symlinks; only Node.js 18+ is required.
+Per tool: `npx super-intelligence --agent codex` (or
+`antigravity`, `claude`, `opencode`); one project only:
+`npx super-intelligence --project`. Publishing status: the
+package goes live on npm with the first `npm publish` from
+this repo — until then use `scripts/install.ps1` /
+`scripts/install.sh` (see `install.md` Option 7).
+
+Alternative: the Agent Skills CLI:
+
+```bash
 npx skills add Dardcor/Super-Intelligence --all --copy
 ```
 
@@ -64,12 +80,13 @@ inside an agent with no terminal), `--copy` (the default
 symlink install fails on Windows without Developer Mode or
 admin rights). The CLI needs **Git** installed — without it,
 it fails with `spawn git ENOENT`. No Git? Download the
-release ZIP and run `scripts/install.ps1` / `scripts/install.sh`
-instead (see `install.md` Option 6).
+main-branch ZIP and run `scripts/install.ps1` /
+`scripts/install.sh` instead (see `install.md` Option 7).
 
 Restart / start a new session after install — skills load at
-session start. Exception: for Antigravity, prefer the install
-scripts or a workspace install — see the Antigravity row above.
+session start. Exception: for Antigravity, prefer
+`npx super-intelligence`, the install scripts or a workspace
+install — see the Antigravity row above.
 
 ## What is NOT the framework
 

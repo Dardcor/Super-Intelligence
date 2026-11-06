@@ -14,6 +14,15 @@ First release.
   installed). Installers now also write to Antigravity's app
   global path `~/.gemini/config/skills/` — the CLI's
   `~/.agents/skills/` target is not read by Antigravity.
+- npm installer (2026-11-06, same release): `npx
+  super-intelligence` — the skills ship inside the npm package
+  (`package.json` + `bin/super-intelligence.js`, Node 18+,
+  stdlib only), so one command installs all 8 skills into all
+  5 tool locations with no Git, no clone and no symlinks.
+  Flags: `--agent <codex|antigravity|claude|opencode|all>`,
+  `--project`, `--list`, `--dry-run`. Tested end-to-end via
+  `npx` from the packed tarball; `node
+  scripts/check-npm-package.js` covers pack contents and install.
 - Meta-skill: `super-intelligence` — Clarify → Plan → Do →
   Verify → Humanize → Deliver, with a Delivery Gate.
 - Narrow sub-skills (one job each, the meta-skill delegates to

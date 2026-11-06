@@ -122,17 +122,36 @@ agent tool on a real machine is still the next test — see
 ## Install
 
 ```bash
-npx skills add Dardcor/Super-Intelligence --all --copy
+npx super-intelligence
 ```
 
-The `skills` CLI detects installed tools and installs to each.
-The flags matter: `-y` is implied by `--all` (the bare command
-asks interactive questions and hangs inside an agent), and
-`--copy` avoids symlinks, which fail on Windows without
-Developer Mode. The CLI needs **Git** installed — without it
-the download fails. No Git? Download `Source code (zip)` from
-the [v0.1.0 release](https://github.com/Dardcor/Super-Intelligence/releases/tag/v0.1.0),
-extract it, and run the script in this repo:
+One command installs all 8 skills into **every** agent tool on
+the machine at once — Claude Code, Codex, OpenCode, Antigravity,
+Cursor and Gemini CLI. The skills ship inside the npm package,
+so there is no Git, no clone, no download step and no symlink:
+everything is copied to each tool's skills folder, and re-running
+is safe (old copies are removed first). Only Node.js 18+ is
+required. After install, start a **new session** in your agent
+tool — skills load at session start.
+
+Per tool, or for one project only:
+
+```bash
+npx super-intelligence --agent codex        # only Codex (shared ~/.agents/skills)
+npx super-intelligence --agent antigravity  # only Antigravity (both .gemini paths)
+npx super-intelligence --agent claude       # only Claude Code
+npx super-intelligence --agent opencode     # only OpenCode
+npx super-intelligence --project            # into ./.agents/skills (this project only)
+npx super-intelligence --list               # list the bundled skills
+npx super-intelligence --dry-run            # show what would be installed
+```
+
+> **Publishing status:** the package is built and tested, and
+> goes live on npm with the first publish (`npm publish` from
+> this repo). Until then, `npx super-intelligence` reports a
+> 404 — use the install script below meanwhile.
+
+No npm? Run the script in this repo instead:
 
 ```bash
 sh scripts/install.sh        # macOS / Linux
@@ -147,13 +166,18 @@ tool found on the machine, and are safe to run again to update.
 Requirements: `sh` + standard Unix tools (macOS/Linux), or
 PowerShell 5.1+ / PowerShell 7 (Windows; also works on macOS/Linux).
 Validating the repo needs Python 3 (`python3 scripts/check-skill.py`,
-or `python` on Windows).
+or `python` on Windows). The npm package test is
+`node scripts/check-npm-package.js`.
 
-> **Antigravity:** `npx skills add -a antigravity` installs to
-> `~/.agents/skills/`, which Antigravity does **not** read
-> globally. Use the install script above (it also covers
-> `~/.gemini/antigravity/skills/` and `~/.gemini/config/skills/`)
-> or copy the skills into your workspace `.agents/skills/`.
+Alternative: the Agent Skills CLI (`npx skills add
+Dardcor/Super-Intelligence --all --copy`) — needs Git, and its
+bare form hangs on interactive prompts, so keep the flags.
+For Antigravity it installs to `~/.agents/skills/`, which
+Antigravity does **not** read globally — use
+`npx super-intelligence` or the install script above instead
+(they also cover `~/.gemini/antigravity/skills/` and
+`~/.gemini/config/skills/`), or copy the skills into your
+workspace `.agents/skills/`.
 
 Per-tool commands (Claude Code, Codex, OpenCode, Antigravity)
 are in [`skills/super-intelligence/references/install.md`](skills/super-intelligence/references/install.md).
@@ -180,7 +204,22 @@ Humanize + Delivery Gate from Super-Intelligence at the end.
 ```bash
 python3 scripts/check-skill.py   # SKILL.md spec + plugin JSON
 sh scripts/test-install.sh       # sandbox: install twice, no nested copies
+node scripts/check-npm-package.js   # npm pack contents + npx installer
 ```
+
+## Publishing to npm
+
+The package name `super-intelligence` is free on npm. From this
+repo, after `npm login`:
+
+```bash
+chmod +x bin/super-intelligence.js   # the snapshot push loses the exec bit
+npm publish
+```
+
+After that, `npx super-intelligence` works anywhere Node.js 18+
+is installed. Version and tag stay at 0.1.0 until the skill has
+been tested in a real agent tool.
 
 ## Status
 

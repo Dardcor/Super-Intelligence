@@ -83,7 +83,7 @@ di atas kertas. Ini yang membedakan skill serius dari skill pajangan.
 
 | # | Uji | Cara | Lolos kalau |
 |---|---|---|---|
-| 1.1 | Install Windows | Di laptop Dardcor (Windows): `npx skills add Dardcor/Super-Intelligence --all --copy` (butuh Git; tanpa Git pakai ZIP rilis + `scripts/install.ps1`) | Folder skill muncul di tool yang dituju, tanpa error |
+| 1.1 | Install Windows | Di laptop Dardcor (Windows): `npx super-intelligence` (butuh Node 18+, tanpa Git; kalau npm belum publish, pakai clone + `scripts/install.ps1`) | Folder skill muncul di tool yang dituju, tanpa error |
 | 1.1a | Antigravity global | `npx skills add -a antigravity` ternyata install ke `~/.agents/skills/` yang TIDAK dibaca Antigravity — diperbaiki 2026-11-06: installer kini juga menulis ke `~/.gemini/config/skills/` (app) | Skill muncul di Antigravity |
 | 1.2 | Load di 1 tool dulu | Pilih 1 dulu (OpenCode / Claude Code / Codex / Antigravity). Buka sesi baru, beri tugas samar | Agent memuat `super-intelligence` dan menjalankan loop Clarify → Plan → Do → Verify → Humanize → Deliver |
 | 1.3 | Uji trigger | Beri 3 tugas: 1 samar, 1 spesifik (mis. Firebase), 1 kecil | Tugas samar → meta-skill dipakai. Tugas spesifik → skill sempit dipakai dulu (atau diakui belum ada). Tugas kecil → tidak diinterogasi berlebihan |

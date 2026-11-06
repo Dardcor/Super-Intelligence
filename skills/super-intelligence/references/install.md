@@ -4,7 +4,36 @@ Framework: Agent Skills (agentskills.io). One skill folder,
 reused everywhere. Only the install path differs per tool.
 Full compatibility table: see `compatibility.md`.
 
-## Option 1 — Agent Skills CLI (recommended)
+## Option 1 — `npx super-intelligence` (recommended)
+
+```bash
+npx super-intelligence
+```
+
+One command, every tool: the skills ship inside the npm
+package, so there is no Git, no clone, no download step and
+no symlink — everything is copied to each tool's skills
+folder (`.agents/skills`, `.claude/skills`,
+`.config/opencode/skills`, `.gemini/antigravity/skills`,
+`.gemini/config/skills`). Only Node.js 18+ is required.
+Re-running is safe; old copies are removed first.
+
+```bash
+npx super-intelligence --agent codex        # only Codex
+npx super-intelligence --agent antigravity  # only Antigravity
+npx super-intelligence --agent claude       # only Claude Code
+npx super-intelligence --agent opencode     # only OpenCode
+npx super-intelligence --project            # ./.agents/skills (this project)
+npx super-intelligence --dry-run            # show, don't change
+```
+
+Start a new session after install — skills load at session
+start. Publishing status: the package is built and tested;
+it goes live on npm with the first `npm publish` from this
+repo. Until then `npx super-intelligence` reports a 404 —
+use Option 7 meanwhile.
+
+## Option 2 — Agent Skills CLI
 
 ```bash
 npx skills add Dardcor/Super-Intelligence -g -a codex --copy -y
@@ -31,11 +60,11 @@ Requirements: **Node.js AND Git**. The CLI clones the repo
 with `git` — without Git it fails with
 `Failed to clone repository ... spawn git ENOENT`. Check with
 `git --version`; if Git is missing, install it from
-https://git-scm.com/downloads, or use Option 6 (release ZIP,
+https://git-scm.com/downloads, or use Option 7 (release ZIP,
 no Git needed). Start a new session after install — skills
 load at session start.
 
-## Option 2 — Claude Code
+## Option 3 — Claude Code
 
 ```bash
 claude plugin marketplace add Dardcor/Super-Intelligence
@@ -46,7 +75,7 @@ Manual fallback: copy `skills/super-intelligence/` to
 `~/.claude/skills/super-intelligence/` (all projects) or
 `.claude/skills/super-intelligence/` (one project).
 
-## Option 3 — Codex
+## Option 4 — Codex
 
 ```bash
 codex plugin marketplace add Dardcor/Super-Intelligence
@@ -56,7 +85,7 @@ Manual fallback: copy `skills/super-intelligence/` to
 `~/.agents/skills/super-intelligence/` (all projects) or
 `.agents/skills/super-intelligence/` (one project).
 
-## Option 4 — OpenCode
+## Option 5 — OpenCode
 
 ```bash
 npx skills add Dardcor/Super-Intelligence
@@ -66,7 +95,7 @@ Manual fallback: copy to `~/.config/opencode/skills/super-intelligence/`
 (global) or `.opencode/skills/super-intelligence/` (one project).
 OpenCode also reads `.agents/skills/` and `~/.agents/skills/`.
 
-## Option 5 — Antigravity
+## Option 6 — Antigravity
 
 ```bash
 npx skills add Dardcor/Super-Intelligence -g -a antigravity --copy -y
@@ -83,7 +112,7 @@ Its global paths depend on the client:
 - Antigravity for IDEs: `~/.gemini/antigravity/skills/<name>/`
 - Antigravity CLI: `~/.gemini/antigravity-cli/skills/<name>/`
 
-The install scripts (Option 6) copy to **both** global
+The install scripts (Option 7) copy to **both** global
 paths, so they work for the app and the IDE. The most
 reliable route is the **workspace** folder, which Antigravity
 always reads: copy every folder under `skills/` into
@@ -96,7 +125,7 @@ fallback (global, app): copy to
 has no plugin manifest — it discovers `SKILL.md` folders by
 directory, so do not look for a manifest file.
 
-## Option 6 — Install scripts in this repo (all skills, all OS)
+## Option 7 — Install scripts in this repo (all skills, all OS)
 
 ```bash
 sh scripts/install.sh        # macOS / Linux (works even if the file lost its executable bit)
@@ -120,7 +149,7 @@ extract it, then run `scripts/install.ps1` (Windows) or
 `sh scripts/install.sh` (macOS/Linux) from the extracted
 folder. No Git, no `npx`, no download step inside the agent.
 
-## Option 7 — Manual (works everywhere)
+## Option 8 — Manual (works everywhere)
 
 1. Clone the repo (needs Git):
    ```bash
@@ -139,7 +168,7 @@ folder. No Git, no `npx`, no download step inside the agent.
    ```
    For Antigravity, also copy to `~/.gemini/antigravity/skills/`
    (IDE) and `~/.gemini/config/skills/` (app), or into the
-   workspace `.agents/skills/` — see Option 5.
+   workspace `.agents/skills/` — see Option 6.
 3. Start a new session and ask for something open-ended — the
    agent should load `super-intelligence` when the task fits its
    description.

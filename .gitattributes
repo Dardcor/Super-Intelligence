@@ -1,6 +1,7 @@
 # Keep line endings LF on every OS, so shell scripts never break
 # on macOS/Linux after a Windows checkout (and vice versa).
 *.sh text eol=lf
+*.js text eol=lf
 *.py text eol=lf
 *.ps1 text eol=lf
 *.md text eol=lf
