@@ -182,8 +182,9 @@ terbuka — itu bagian Fase 1, perlu tool sungguhan.)
       → `check-skill.py` kini memvalidasi semua file JSON (5 file lolos)
 - [x] GitHub Actions (opsional, setelah Fase 2): jalankan
       validator tiap push / pull request
-      → `.github/workflows/check.yml` (draf, belum pernah jalan di CI
-      karena tidak ada push)
+      → `.github/workflows/check.yml` (draf, LOCAL ONLY — tidak bisa
+      di-push lewat GitHub App karena aplikasinya tidak punya izin
+      Workflows; tambahkan manual lewat web GitHub bila mau)
 - [x] Perbaikan `install.sh` yang ditahan → masuk rilis v0.1.0
       (keputusan pemilik 2026-11-06: rilis lengkap sebagai v0.1.0)
 
