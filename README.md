@@ -1,1 +1,1 @@
-# Super-Intelligence
+# Super-Intelligence skill
